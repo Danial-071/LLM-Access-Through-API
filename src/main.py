@@ -1,14 +1,15 @@
 import os
 from fastapi import FastAPI
 from dotenv import load_dotenv
-from src.routes.changelog import router as changelog_router
+from src.routes.changelog import router
 
 load_dotenv()
 
-app = FastAPI(title="Changelog API")
+app = FastAPI()
 
+app.include_router(router)
 # Mount the route from changelog.py
-app.include_router(changelog_router)
+
 
 @app.get("/")
 def root():

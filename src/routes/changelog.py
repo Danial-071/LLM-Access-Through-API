@@ -11,6 +11,7 @@ router = APIRouter()
 def generate_changelog(payload: ChangelogInput):
     # Stub Mode: skips the model completely if LLM_STUB=1
     if os.environ.get("LLM_STUB") == "1":
+        
         return ChangelogOutput(
             type=CommitType.feat,
             scope="auth",

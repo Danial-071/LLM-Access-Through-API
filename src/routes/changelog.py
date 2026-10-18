@@ -2,12 +2,12 @@ import os
 from fastapi import FastAPI, HTTPException, APIRouter
 from dotenv import load_dotenv
 from src.llm.schema import ChangelogInput, ChangelogOutput, CommitType
-
+from src.llm.client import call_llm
 load_dotenv()
 
 router = APIRouter()
 
-@router.post("/changelog", response_model=ChangelogOutput)
+@router.post("/changelog")
 def generate_changelog(payload: ChangelogInput):
     # Stub Mode: skips the model completely if LLM_STUB=1
     if os.environ.get("LLM_STUB") == "1":
@@ -20,4 +20,5 @@ def generate_changelog(payload: ChangelogInput):
         )
 
     # Model call logic will be added in Stage 2
-    raise HTTPException(status_code=501, detail="Model logic not yet wired")
+    raw_response = call_llm(payload.commit)
+    return {"raw_output": raw_response}

@@ -1,17 +1,19 @@
 import os
-from fastapi import FastAPI, HTTPException, APIRouter
-from dotenv import load_dotenv
+from fastapi import APIRouter, HTTPException, status
+from src.llm.client import generate_and_validate_changelog
 from src.llm.schema import ChangelogInput, ChangelogOutput, CommitType
-from src.llm.client import call_llm
-load_dotenv()
 
 router = APIRouter()
 
-@router.post("/changelog")
+
+@router.post(
+    "/changelog",
+    response_model=ChangelogOutput,
+    status_code=status.HTTP_200_OK,
+)
 def generate_changelog(payload: ChangelogInput):
-    # Stub Mode: skips the model completely if LLM_STUB=1
+    # Stub mode
     if os.environ.get("LLM_STUB") == "1":
-        
         return ChangelogOutput(
             type=CommitType.feat,
             scope="auth",
@@ -19,6 +21,10 @@ def generate_changelog(payload: ChangelogInput):
             confidence=0.98,
         )
 
-    # Model call logic will be added in Stage 2
-    raw_response = call_llm(payload.commit)
-    return {"raw_output": raw_response}
+    try:
+        return generate_and_validate_changelog(payload.commit)
+    except ValueError as e:
+        raise HTTPException(
+            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+            detail=str(e),
+        )

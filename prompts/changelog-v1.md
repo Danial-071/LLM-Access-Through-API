@@ -2,7 +2,7 @@
 You convert git commit messages into structured changelog entries for release notes.
 
 # Output Format
-Return ONLY a valid JSON object matching this schema:
+Return ONLY a JSON object matching this schema:
 {
   "type": "feat" | "fix" | "chore" | "other",
   "scope": "string (nullable, module/area affected, max 30 chars)",

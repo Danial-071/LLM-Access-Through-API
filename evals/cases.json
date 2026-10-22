@@ -1,0 +1,50 @@
+[
+  {
+    "id": 1,
+    "input": "feat(auth): implement refresh token rotation",
+    "expected_type": "feat",
+    "expected_scope": "auth"
+  },
+  {
+    "id": 2,
+    "input": "fix(checkout): resolve race condition in coupon code application",
+    "expected_type": "fix",
+    "expected_scope": "checkout"
+  },
+  {
+    "id": 3,
+    "input": "chore(deps): bump pydantic from 2.6.0 to 2.7.0",
+    "expected_type": "chore",
+    "expected_scope": "deps"
+  },
+  {
+    "id": 4,
+    "input": "docs: update API usage examples in getting started guide",
+    "expected_type": "chore",
+    "expected_scope": "docs"
+  },
+  {
+    "id": 5,
+    "input": "feat(billing): support downloadable invoice PDFs",
+    "expected_type": "feat",
+    "expected_scope": "billing"
+  },
+  {
+    "id": 6,
+    "input": "fix(db): handle connection pool timeouts gracefully",
+    "expected_type": "fix",
+    "expected_scope": "db"
+  },
+  {
+    "id": 7,
+    "input": "quick typo cleanup in comments",
+    "expected_type": "chore",
+    "expected_scope": null
+  },
+  {
+    "id": 8,
+    "input": "asdf updates wtf",
+    "expected_type": "other",
+    "expected_scope": null
+  }
+]

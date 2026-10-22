@@ -1,0 +1,31 @@
+Stage 1: main.py file will be run via the command :
+uvicorn src.main:app --reload 
+This will startup the uvicorn server which will accept the values sent via the 
+powershell command:
+
+  Invoke-RestMethod -Uri "http://127.0.0.1:8000/changelog" -Method Post -ContentType "application/json" -Body '{"commit": "feat: add login button"}'
+
+
+to invoke the changelog function and the changelog function will return the 
+relevant json body as defined in the changelog.py file.
+
+One example of a bad command is :
+try {
+>>     Invoke-RestMethod -Uri "http://127.0.0.1:8000/changelog" -Method Post -ContentType "application/json" -Body '{"wrong_key": "test"}'
+>> } catch {
+>>     $_.ErrorDetails.Message
+>> }
+
+
+schema.py file is just for setting up a standard schema for consistency across all input
+and output parameters
+
+
+Stage 2:
+Added client.py file for actually implementing the LLM call functionality which is 
+then later used by the changelog.py file to actually create a dynamic runtime response
+
+Stage 3:
+output is stripped and parsed to clear down the LLM response 
+The parsed response is then validated to ensure it conforms to the schema
+if the returned response is not valid, the system retries and feeds the model its own response
